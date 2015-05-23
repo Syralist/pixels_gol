@@ -183,6 +183,7 @@ def main():
     global pattern
     global randomPattern
     pygame.init()
+    pygame.joystick.init()
     clock = pygame.time.Clock()
     
     resetGame()
