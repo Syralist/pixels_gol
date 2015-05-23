@@ -1,6 +1,7 @@
 import pygame, led, sys, os, random, csv
 import numpy
 from pygame.locals import *
+from led.PixelEventHandler import *
 # from bmpfont import bmpfont
 
 """ A flappy bird clone
@@ -44,12 +45,9 @@ gamestate = 1 #1=alive; 0=dead
 Cells = numpy.zeros((90, 20), dtype=numpy.int32)
 CellsNew = numpy.zeros((90, 20), dtype=numpy.int32)
 # Cells[10,10] = IWHITE
-Cells[1][0] = IWHITE
-Cells[2][1] = IWHITE
-Cells[0][2] = IWHITE
-Cells[1][2] = IWHITE
-Cells[2][2] = IWHITE
 
+pattern = 0
+randomPattern = False
 
 def CountLifeNeighbours(x, y):
     global Cells
@@ -121,50 +119,112 @@ def CheckCells():
     Cells[:] = CellsNew
 
 def resetGame():
-    pass
+    global Cells
+    global pattern
+    global randomPattern
+    if pattern == 0:
+        for x in range(90):
+            for y in range(20):
+                if random.randint(1,10) > 5:
+                    Cells[x][y] = IBLACK
+                else:
+                    Cells[x][y] = IWHITE
+        randomPattern = True
+    else:
+        for x in range(90):
+            for y in range(20):
+                Cells[x][y] = IBLACK
+        randomPattern = False
+        
+    if pattern == 1:
+        Cells[1][0] = IWHITE
+        Cells[2][1] = IWHITE
+        Cells[0][2] = IWHITE
+        Cells[1][2] = IWHITE
+        Cells[2][2] = IWHITE
+    elif pattern == 2:
+        Cells[0][10] = IWHITE
+        Cells[1][10] = IWHITE
+        Cells[2][10] = IWHITE
+
+        Cells[5][9] = IWHITE
+        Cells[5][10] = IWHITE
+        Cells[7][10] = IWHITE
+        Cells[4][11] = IWHITE
+        Cells[6][11] = IWHITE
+        Cells[6][12] = IWHITE
+
+        Cells[30][9] = IWHITE
+        Cells[31][9] = IWHITE
+        Cells[32][9] = IWHITE
+        Cells[33][9] = IWHITE
+        Cells[34][9] = IWHITE
+        Cells[35][9] = IWHITE
+        Cells[36][9] = IWHITE
+        Cells[37][9] = IWHITE
+        Cells[30][10] = IWHITE
+        Cells[32][10] = IWHITE
+        Cells[33][10] = IWHITE
+        Cells[34][10] = IWHITE
+        Cells[35][10] = IWHITE
+        Cells[37][10] = IWHITE
+        Cells[30][11] = IWHITE
+        Cells[31][11] = IWHITE
+        Cells[32][11] = IWHITE
+        Cells[33][11] = IWHITE
+        Cells[34][11] = IWHITE
+        Cells[35][11] = IWHITE
+        Cells[36][11] = IWHITE
+        Cells[37][11] = IWHITE
+
 
 def main():
     global gamestate
+    global pattern
+    global randomPattern
     pygame.init()
     clock = pygame.time.Clock()
     
     resetGame()
 
     while True:
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                pygame.quit()
-                sys.exit()
+        for pgevent in pygame.event.get():
+            event = process_event(pgevent)
+            # if event.button == EXIT:
+            #     pygame.quit()
+            #     sys.exit()
 
-            elif event.type == KEYDOWN:
-                if event.key == K_UP:
+            if event.type == PUSH:
+                if event.button == UP:
+                    resetGame()
+                elif event.button == DOWN:
                     pass
-                elif event.key == K_DOWN:
-                    pass
-                elif event.key == K_LEFT:
-                    pass
-                elif event.key == K_RIGHT:
-                    pass
-                elif event.key == K_SPACE:
+                elif event.button == LEFT:
+                    if pattern > 0:
+                        pattern -= 1
+                    resetGame()
+                elif event.button == RIGHT:
+                    if pattern < 2:
+                        pattern += 1
+                    resetGame()
+                elif event.button == B1:
                     if gamestate == 0:
                         gamestate = 1
                     else:
-                        CheckCells()
-                        # print CountLifeNeighbours(11, 11)
-                elif event.key == K_ESCAPE:
+                        gamestate = 0
+                elif event.button == P1:
                     pygame.quit()
                     sys.exit()
 
-            elif event.type == KEYUP:
-                if event.key == K_UP or event.key == K_DOWN:
-                    pass
-
         if gamestate == 1:
-            # screen.fill(BLACK)
+            CheckCells()
             pygame.surfarray.blit_array(screen, Cells)
-
+            if randomPattern:
+                gamestate = 0
+                randomPattern = False
         else:
-            pass
+            if pattern > 0 and not randomPattern:
+                gamestate = 1
 
         simDisplay.update(screen)
         ledDisplay.update(screen)
