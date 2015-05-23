@@ -293,7 +293,7 @@ def main():
                         pattern -= 1
                     resetGame()
                 elif event.button == RIGHT:
-                    if pattern < 2:
+                    if pattern < 3:
                         pattern += 1
                     resetGame()
                     if pattern > 0 and not randomPattern:
@@ -307,7 +307,7 @@ def main():
                     pygame.quit()
                     sys.exit()
 
-        if gamestate == 1:
+        if gamestate == 1 and pattern != 3:
             CheckCells()
             pygame.surfarray.blit_array(screen, Cells)
             if randomPattern:
