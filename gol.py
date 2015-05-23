@@ -118,6 +118,13 @@ def CheckCells():
 
     Cells[:] = CellsNew
 
+def setCell(x, y):
+    global Cells
+    try:
+        Cells[x][y] = IWHITE
+    except:
+        pass
+
 def resetGame():
     global Cells
     global pattern
@@ -142,6 +149,33 @@ def resetGame():
         Cells[0][2] = IWHITE
         Cells[1][2] = IWHITE
         Cells[2][2] = IWHITE
+
+        setCell(11, 1)
+        setCell(10, 2)
+        setCell(12, 2)
+        setCell(10, 3)
+        setCell(12, 3)
+        setCell(12, 4)
+        setCell(12, 5)
+        setCell(13, 5)
+        setCell(11, 6)
+        setCell(13, 6)
+        setCell(13, 7)
+        setCell(12, 8)
+        setCell(13, 8)
+        setCell(14, 8)
+        setCell(12, 9)
+        setCell(14, 9)
+        setCell(11, 10)
+        setCell(13, 10)
+        setCell(13, 11)
+        setCell(14, 11)
+        setCell(13, 13)
+        setCell(11, 14)
+        setCell(13, 14)
+        setCell(11, 15)
+        setCell(13, 15)
+        setCell(12, 16)
     elif pattern == 2:
         Cells[0][10] = IWHITE
         Cells[1][10] = IWHITE
@@ -153,6 +187,55 @@ def resetGame():
         Cells[4][11] = IWHITE
         Cells[6][11] = IWHITE
         Cells[6][12] = IWHITE
+
+        setCell(13, 5)
+        setCell(14, 5)
+        setCell(15, 5)
+        setCell(19, 5)
+        setCell(20, 5)
+        setCell(21, 5)
+        setCell(11, 7)
+        setCell(16, 7)
+        setCell(18, 7)
+        setCell(23, 7)
+        setCell(11, 8)
+        setCell(16, 8)
+        setCell(18, 8)
+        setCell(23, 8)
+        setCell(11, 9)
+        setCell(16, 9)
+        setCell(18, 9)
+        setCell(23, 9)
+        setCell(13, 10)
+        setCell(14, 10)
+        setCell(15, 10)
+        setCell(19, 10)
+        setCell(20, 10)
+        setCell(21, 10)
+        setCell(13, 12)
+        setCell(14, 12)
+        setCell(15, 12)
+        setCell(19, 12)
+        setCell(20, 12)
+        setCell(21, 12)
+        setCell(11, 13)
+        setCell(16, 13)
+        setCell(18, 13)
+        setCell(23, 13)
+        setCell(11, 14)
+        setCell(16, 14)
+        setCell(18, 14)
+        setCell(23, 14)
+        setCell(11, 15)
+        setCell(16, 15)
+        setCell(18, 15)
+        setCell(23, 15)
+        setCell(13, 17)
+        setCell(14, 17)
+        setCell(15, 17)
+        setCell(19, 17)
+        setCell(20, 17)
+        setCell(21, 17)
 
         Cells[30][9] = IWHITE
         Cells[31][9] = IWHITE
@@ -176,7 +259,8 @@ def resetGame():
         Cells[35][11] = IWHITE
         Cells[36][11] = IWHITE
         Cells[37][11] = IWHITE
-
+    elif pattern == 3:
+        pass
 
 def main():
     global gamestate
@@ -212,6 +296,8 @@ def main():
                     if pattern < 2:
                         pattern += 1
                     resetGame()
+                    if pattern > 0 and not randomPattern:
+                        gamestate = 1
                 elif event.button == B1:
                     if gamestate == 0:
                         gamestate = 1
@@ -228,8 +314,7 @@ def main():
                 gamestate = 0
                 randomPattern = False
         else:
-            if pattern > 0 and not randomPattern:
-                gamestate = 1
+            pass
 
         simDisplay.update(screen)
         ledDisplay.update(screen)
