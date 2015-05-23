@@ -184,6 +184,10 @@ def main():
     global randomPattern
     pygame.init()
     pygame.joystick.init()
+    # Initialize first joystick
+    if pygame.joystick.get_count() > 0:
+        stick = pygame.joystick.Joystick(0)
+        stick.init()
     clock = pygame.time.Clock()
     
     resetGame()
