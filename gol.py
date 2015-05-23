@@ -53,42 +53,42 @@ def CountLifeNeighbours(x, y):
     global Cells
     lifeCells = 0
     try:
-        if Cells[x-1][y-1] == IWHITE:
+        if x > 0 and y > 0 and Cells[x-1][y-1] == IWHITE:
             lifeCells += 1
     except:
         pass
     try:
-        if Cells[x][y-1] == IWHITE:
+        if y > 0 and Cells[x][y-1] == IWHITE:
             lifeCells += 1
     except:
         pass
     try:
-        if Cells[x+1][y-1] == IWHITE:
+        if x < 90 and y > 0 and Cells[x+1][y-1] == IWHITE:
             lifeCells += 1
     except:
         pass
     try:
-        if Cells[x-1][y] == IWHITE:
+        if x > 0 and Cells[x-1][y] == IWHITE:
             lifeCells += 1
     except:
         pass
     try:
-        if Cells[x+1][y] == IWHITE:
+        if x < 90 and Cells[x+1][y] == IWHITE:
             lifeCells += 1
     except:
         pass
     try:
-        if Cells[x-1][y+1] == IWHITE:
+        if x > 0 and y < 20 and Cells[x-1][y+1] == IWHITE:
             lifeCells += 1
     except:
         pass
     try:
-        if Cells[x][y+1] == IWHITE:
+        if y < 20 and Cells[x][y+1] == IWHITE:
             lifeCells += 1
     except:
         pass
     try:
-        if Cells[x+1][y+1] == IWHITE:
+        if x < 90 and y < 20 and Cells[x+1][y+1] == IWHITE:
             lifeCells += 1
     except:
         pass
